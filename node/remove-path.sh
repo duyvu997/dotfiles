@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path_to_remove="$HOME/.volta/bin"
+path_to_remove="/home/ubuntu/.volta/bin"
 
 # Remove the specific path from PATH variable in ~/.bashrc
 sed -i "s|:$path_to_remove||g" ~/.bashrc
