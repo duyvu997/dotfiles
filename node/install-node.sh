@@ -1,22 +1,17 @@
 #!/bin/bash
 
-# Install Node.js
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# Install NVM (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
-# Install Volta
-curl https://get.volta.sh | bash -s -- --skip-setup
+# Activate NVM in the current shell session
+source ~/.nvm/nvm.sh
 
-# Set VOLTA_HOME variable if not already set
-if [[ -z "${VOLTA_HOME}" ]]; then
-  echo 'export VOLTA_HOME="$HOME/.volta"' >> ~/.bashrc
-  echo 'export PATH="$VOLTA_HOME/bin:$PATH"' >> ~/.bashrc
-fi
+# Install the latest LTS version of Node.js
+nvm install --lts
 
-# Add Volta to the current shell session
-source ~/.bashrc
+# Set the installed LTS version as the default
+nvm alias default 'lts/*'
 
-# Verify installations
+# Verify Node.js installation
 node -v
 npm -v
-volta --version

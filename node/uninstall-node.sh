@@ -1,24 +1,19 @@
 #!/bin/bash
 
-# Install Node.js
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# Uninstall Node.js
+nvm uninstall --lts
 
-# Install Volta
-curl https://get.volta.sh | bash -s -- --skip-setup
+# Uninstall NVM (Node Version Manager)
+rm -rf ~/.nvm
 
-# Set VOLTA_HOME variable if not already set
-if [[ -z "${VOLTA_HOME}" ]]; then
-  echo 'export VOLTA_HOME="$HOME/.volta"' >> ~/.bashrc
-  echo 'export PATH="$VOLTA_HOME/bin:$PATH"' >> ~/.bashrc
-fi
+# Remove NVM-related lines from the shell configuration file (e.g., ~/.bashrc)
+sed -i '/nvm/d' ~/.bashrc
 
-# Replace the specified path with VOLTA_HOME/bin in PATH variable
-export PATH="${PATH/'$VOLTA_HOME/bin'/}"
-# Add Volta to the current shell session
+# Remove NVM-related lines from the shell profile file (e.g., ~/.profile)
+sed -i '/nvm/d' ~/.profile
+
+# Remove NVM-related lines from the shell configuration file (e.g., ~/.bash_profile)
+sed -i '/nvm/d' ~/.bash_profile
+
+# Refresh the shell environment
 source ~/.bashrc
-
-# Verify installations
-node -v
-npm -v
-volta --version
