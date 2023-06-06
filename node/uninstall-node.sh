@@ -4,7 +4,7 @@
 sudo apt-get remove -y nodejs
 
 # Remove Volta
-curl https://get.volta.sh | bash -- --uninstall -y
+rm -rf ~/.volta
 
 # Remove Volta environment variables
 sed -i '/^# Added by Volta$/d' ~/.bashrc
