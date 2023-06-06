@@ -1,18 +1,24 @@
 #!/bin/bash
 
-# Remove Node.js
-sudo apt-get remove -y nodejs
+# Install Node.js
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
-# Remove Volta
-rm -rf ~/.volta
+# Install Volta
+curl https://get.volta.sh | bash -s -- --skip-setup
 
-# Remove Volta environment variables
-sed -i '/^# Added by Volta$/d' ~/.bashrc
-sed -i '/^export VOLTA_HOME/d' ~/.bashrc
-sed -i '/^export PATH=\$VOLTA_HOME\/bin:\$PATH$/d' ~/.bashrc
+# Set VOLTA_HOME variable if not already set
+if [[ -z "${VOLTA_HOME}" ]]; then
+  echo 'export VOLTA_HOME="$HOME/.volta"' >> ~/.bashrc
+  echo 'export PATH="$VOLTA_HOME/bin:$PATH"' >> ~/.bashrc
+fi
 
-# Remove Volta from the current shell session
-unset VOLTA_HOME
+# Replace the specified path with VOLTA_HOME/bin in PATH variable
+export PATH="${PATH/'$VOLTA_HOME/bin'/}"
+# Add Volta to the current shell session
 source ~/.bashrc
 
-echo "Node.js and Volta have been uninstalled."
+# Verify installations
+node -v
+npm -v
+volta --version
